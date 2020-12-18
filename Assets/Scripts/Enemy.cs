@@ -56,8 +56,6 @@ public class Enemy : MonoBehaviour
             {
                 lasers[i].AssignEnemyLaser();
             }
-
-            //Debug.Break();
         }
     }
 

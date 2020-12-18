@@ -8,6 +8,8 @@ public class Player : MonoBehaviour
     private float _speed = 3.5f;
     private float _speedMultiplier = 2;
     [SerializeField]
+    private float _speedBooters = 1;
+    [SerializeField]
     private GameObject _laserPrefab;
     [SerializeField]
     private GameObject _tripleShotPrefab;
@@ -73,11 +75,12 @@ public class Player : MonoBehaviour
     {
         CalculateMovement();
 
+        SpeedBoosters();
+
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
         {
             FireLaser();
         }
-        
     }
 
     void CalculateMovement()
@@ -87,7 +90,7 @@ public class Player : MonoBehaviour
 
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
 
-        transform.Translate(direction * _speed * Time.deltaTime);
+        transform.Translate(direction * _speed * _speedBooters * Time.deltaTime);
 
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.8f, 0),0);
 
@@ -98,6 +101,18 @@ public class Player : MonoBehaviour
         else if (transform.position.x <= -11)
         {
             transform.position = new Vector3(11, transform.position.y, 0);
+        }
+    }
+
+    void SpeedBoosters()
+    {
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            _speedBooters = 3;
+        }
+        else
+        {
+            _speedBooters = 1;
         }
     }
 
