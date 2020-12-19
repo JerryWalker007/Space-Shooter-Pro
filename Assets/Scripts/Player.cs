@@ -24,10 +24,13 @@ public class Player : MonoBehaviour
 
     private bool _isTripleShotActive = false;
     private bool _isSpeedBoostActive = false;
+    [SerializeField]
     private bool _isShieldActive = false;
 
     [SerializeField]
     private GameObject _shieldVisualizer;
+    private int _shieldStrength = 3;
+    private SpriteRenderer _shieldSpriteRenderer;
 
     [SerializeField]
     private GameObject _leftEngine, _rightEngine;
@@ -41,16 +44,16 @@ public class Player : MonoBehaviour
     private AudioClip _laserSoundClip;
     [SerializeField]
     private AudioSource _audioSource;
-    
-   
+
     void Start()
     {
         transform.position = new Vector3(0, 0, 0);
         _spawnManager = GameObject.Find("Spawn Manager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _audioSource = GetComponent<AudioSource>();
+        _shieldSpriteRenderer = _shieldVisualizer.GetComponentInChildren<SpriteRenderer>();
 
-        if(_spawnManager == null)
+        if (_spawnManager == null)
         {
             Debug.LogError("The Spawn Manager is NULL");
         }
@@ -137,8 +140,20 @@ public class Player : MonoBehaviour
     {
         if (_isShieldActive == true)
         {
-            _isShieldActive = false;
-            _shieldVisualizer.SetActive(false);
+            _shieldStrength--;
+
+            if (_shieldStrength > 0)
+            {
+                ChangeShieldColor();
+            }
+            else
+            {
+                _isShieldActive = false;
+                _shieldSpriteRenderer.color = Color.white;
+                _shieldVisualizer.SetActive(false);
+                _shieldStrength = 3;
+            }
+           
             return;
         }
 
@@ -198,5 +213,20 @@ public class Player : MonoBehaviour
     {
         _score += points;
         _uiManager.UpdateScore(_score);
+    }
+
+    public void ChangeShieldColor()
+    { 
+
+        if (_shieldStrength == 2)
+        {
+            _shieldSpriteRenderer.color = Color.green;
+            Debug.Log("Shield = 2");
+        }
+        else
+        {
+            _shieldSpriteRenderer.color = Color.red;
+            Debug.Log("Shield = 1");
+        }
     }
 }

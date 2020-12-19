@@ -733,6 +733,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 5
+  _speedBooters: 1
   _laserPrefab: {fileID: 1710002047801043892, guid: c89146f95f585a341b0c13e945dd477e,
     type: 3}
   _tripleShotPrefab: {fileID: 4365048233012532539, guid: 3c269c5832bdf754d88ce228a8cb9d6d,
@@ -740,6 +741,7 @@ MonoBehaviour:
   _offsetLaser: 1.05
   _fireRate: 0.15
   _lives: 3
+  _isShieldActive: 0
   _shieldVisualizer: {fileID: 919503247}
   _leftEngine: {fileID: 82480511}
   _rightEngine: {fileID: 1342277269}
