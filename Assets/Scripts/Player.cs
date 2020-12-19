@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _fireRate = 0.5f;
     private float _canFire = -1f;
+    
     [SerializeField]
     private int _lives = 3;
     private SpawnManager _spawnManager;
@@ -37,6 +38,9 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private int _score;
+
+    [SerializeField]
+    private int _ammoCount = 15;
 
     private UIManager _uiManager;
 
@@ -82,7 +86,17 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
         {
-            FireLaser();
+            if (_ammoCount > 0)
+            {
+                --_ammoCount;
+                FireLaser();
+                _uiManager.UpdateAmmo(_ammoCount);
+            }
+            else
+            {
+                Debug.Log("Out of Ammo!");
+            }
+            
         }
     }
 

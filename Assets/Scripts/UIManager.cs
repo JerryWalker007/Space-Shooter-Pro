@@ -17,6 +17,10 @@ public class UIManager : MonoBehaviour
     private Text _gameOverText;
     [SerializeField]
     private Text _gameRestartText;
+    [SerializeField]
+    private Text _ammoCountText;
+    [SerializeField]
+    private Text _outOfAmmoText;
 
     private GameManager _gameManager;
 
@@ -24,6 +28,8 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         _scoreText.text = "Score: " + 0;
+        _ammoCountText.text = "Ammo: " + 15;
+        _outOfAmmoText.gameObject.SetActive(false);
         _gameOverText.gameObject.SetActive(false);
         _gameManager = GameObject.Find("Game_Manager").GetComponent<GameManager>();
 
@@ -36,6 +42,17 @@ public class UIManager : MonoBehaviour
     public void UpdateScore(int playerScore)
     {
         _scoreText.text = "Score: " + playerScore.ToString();
+    }
+
+    public void UpdateAmmo(int playerAmmo)
+    {
+        _ammoCountText.text = "Ammo: " + playerAmmo.ToString();
+
+        if (playerAmmo == 0)
+        {
+            _outOfAmmoText.gameObject.SetActive(true);
+            StartCoroutine(OutOfAmmoFlickerRoutine());
+        }
     }
 
     public void UpdateLives(int currentLives)
@@ -63,6 +80,17 @@ public class UIManager : MonoBehaviour
             _gameOverText.text = "GAME OVER";
             yield return new WaitForSeconds(0.5f);
             _gameOverText.text = "";
+            yield return new WaitForSeconds(0.5f);
+        }
+    }
+
+    IEnumerator OutOfAmmoFlickerRoutine()
+    {
+        while(true)
+        {
+            _outOfAmmoText.text = "OUT OF AMMO";
+            yield return new WaitForSeconds(0.5f);
+            _outOfAmmoText.text = "";
             yield return new WaitForSeconds(0.5f);
         }
     }
