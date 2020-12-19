@@ -44,6 +44,11 @@ public class UIManager : MonoBehaviour
         _scoreText.text = "Score: " + playerScore.ToString();
     }
 
+    public void StopOutOfAmmoDisplay()
+    {
+        _outOfAmmoText.gameObject.SetActive(false);
+    }
+
     public void UpdateAmmo(int playerAmmo)
     {
         _ammoCountText.text = "Ammo: " + playerAmmo.ToString();

@@ -84,20 +84,9 @@ public class Player : MonoBehaviour
 
         SpeedBoosters();
 
-        if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
-        {
-            if (_ammoCount > 0)
-            {
-                --_ammoCount;
-                FireLaser();
-                _uiManager.UpdateAmmo(_ammoCount);
-            }
-            else
-            {
-                Debug.Log("Out of Ammo!");
-            }
-            
-        }
+        FireWeapons();
+
+        
     }
 
     void CalculateMovement()
@@ -118,6 +107,20 @@ public class Player : MonoBehaviour
         else if (transform.position.x <= -11)
         {
             transform.position = new Vector3(11, transform.position.y, 0);
+        }
+    }
+
+    void FireWeapons()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
+        {
+            if (_ammoCount > 0)
+            {
+                --_ammoCount;
+                FireLaser();
+                _uiManager.UpdateAmmo(_ammoCount);
+            }
+
         }
     }
 
@@ -242,5 +245,13 @@ public class Player : MonoBehaviour
             _shieldSpriteRenderer.color = Color.red;
             Debug.Log("Shield = 1");
         }
+    }
+
+    public void AmmoRecharge()
+    {
+        _ammoCount = 15;
+        _uiManager.UpdateAmmo(_ammoCount);
+        _uiManager.StopOutOfAmmoDisplay();
+        _uiManager.StopAllCoroutines();
     }
 }
