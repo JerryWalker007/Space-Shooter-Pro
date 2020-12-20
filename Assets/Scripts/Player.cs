@@ -254,4 +254,27 @@ public class Player : MonoBehaviour
         _uiManager.StopOutOfAmmoDisplay();
         _uiManager.StopAllCoroutines();
     }
+
+    public void ExtraLife()
+    {
+        if (_lives >= 3)
+        {
+            //do nothing
+        }
+        else
+        {
+            _lives++;
+        }
+        
+        if (_lives == 3 )
+        {
+            _rightEngine.SetActive(false);
+        }
+        else if (_lives == 2)
+        {
+            _leftEngine.SetActive(false);
+        }
+
+        _uiManager.UpdateLives(_lives);
+    }
 }
