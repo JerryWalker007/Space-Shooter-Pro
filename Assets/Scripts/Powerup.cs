@@ -51,6 +51,9 @@ public class Powerup : MonoBehaviour
                     case 4:
                         player.ExtraLife();
                         break;
+                    case 5:
+                        player.HeatSeekingLaserActive();
+                        break;
                     default:
                         Debug.Log("Default Value");
                         break;

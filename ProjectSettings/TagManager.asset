@@ -8,6 +8,7 @@ TagManager:
   - Laser
   - Asteroid
   - ShieldUp
+  - HeatSeekingLaser
   layers:
   - Default
   - TransparentFX

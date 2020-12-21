@@ -14,6 +14,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _tripleShotPrefab;
     [SerializeField]
+    private GameObject _heatSeekPrefab;
+    [SerializeField]
     private float _offsetLaser = 1.05f;
     [SerializeField]
     private float _fireRate = 0.5f;
@@ -25,8 +27,9 @@ public class Player : MonoBehaviour
 
     private bool _isTripleShotActive = false;
     private bool _isSpeedBoostActive = false;
-    [SerializeField]
     private bool _isShieldActive = false;
+    [SerializeField]
+    private bool _isHeatSeekActive = false;
 
     [SerializeField]
     private GameObject _shieldVisualizer;
@@ -62,12 +65,12 @@ public class Player : MonoBehaviour
             Debug.LogError("The Spawn Manager is NULL");
         }
 
-        if(_uiManager == null)
+        if (_uiManager == null)
         {
             Debug.LogError("The Spawn Manager is NULL.");
         }
 
-        if(_audioSource == null)
+        if (_audioSource == null)
         {
             Debug.LogError("AudioSource on the player is NULL.");
         }
@@ -85,7 +88,6 @@ public class Player : MonoBehaviour
         SpeedBoosters();
 
         FireWeapons();
-
         
     }
 
@@ -143,6 +145,10 @@ public class Player : MonoBehaviour
         if(_isTripleShotActive == true)
         {
             Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
+        }
+        else if (_isHeatSeekActive == true)
+        {
+            Instantiate(_heatSeekPrefab, transform.position + new Vector3(0, 2.0f, 0), Quaternion.identity);
         }
         else
         {
@@ -206,6 +212,17 @@ public class Player : MonoBehaviour
         _isTripleShotActive = false;
     }
 
+    public void HeatSeekingLaserActive()
+    {
+        _isHeatSeekActive = true;
+        StartCoroutine(HeatSeekPowerDownRoutin());
+    }
+    IEnumerator HeatSeekPowerDownRoutin()
+    {
+        yield return new WaitForSeconds(5.0f);
+        _isHeatSeekActive = false;
+    }
+
     public void SpeedBoostActive()
     {
         _isSpeedBoostActive = true;
@@ -238,12 +255,12 @@ public class Player : MonoBehaviour
         if (_shieldStrength == 2)
         {
             _shieldSpriteRenderer.color = Color.green;
-            Debug.Log("Shield = 2");
+          
         }
         else
         {
             _shieldSpriteRenderer.color = Color.red;
-            Debug.Log("Shield = 1");
+
         }
     }
 
@@ -277,4 +294,5 @@ public class Player : MonoBehaviour
 
         _uiManager.UpdateLives(_lives);
     }
+
 }

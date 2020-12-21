@@ -28,12 +28,10 @@ public class Laser : MonoBehaviour
 
         if (transform.position.y >= 7f)
         {
-            /* Had issue of enemy being destoryed so just added script to tripleshot prefab
-             * fixed all.
-             * if (transform.parent != null)
+              if (transform.parent != null)
              {
                  Destroy(transform.parent.gameObject);
-             }*/
+             }
 
             Destroy(this.gameObject);
         }

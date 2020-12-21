@@ -88,7 +88,7 @@ public class Enemy : MonoBehaviour
             Destroy(this.gameObject, 2.8f);
             
         }
-        else if (other.tag == "Laser")
+        else if (other.tag == "Laser" || other.tag == "HeatSeekingLaser")
         {
             Destroy(other.gameObject);
             
