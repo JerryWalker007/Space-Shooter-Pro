@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class Player : MonoBehaviour
     private float _speed = 3.5f;
     private float _speedMultiplier = 2;
     [SerializeField]
-    private float _speedBooters = 1;
+    private float _thrusters = 1;
     [SerializeField]
     private GameObject _laserPrefab;
     [SerializeField]
@@ -20,7 +21,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _fireRate = 0.5f;
     private float _canFire = -1f;
-    
+
     [SerializeField]
     private int _lives = 3;
     private SpawnManager _spawnManager;
@@ -30,7 +31,7 @@ public class Player : MonoBehaviour
     private bool _isShieldActive = false;
     [SerializeField]
     private bool _isHeatSeekActive = false;
-
+    
     [SerializeField]
     private GameObject _shieldVisualizer;
     private int _shieldStrength = 3;
@@ -51,6 +52,8 @@ public class Player : MonoBehaviour
     private AudioClip _laserSoundClip;
     [SerializeField]
     private AudioSource _audioSource;
+
+    public bool DisableThrusters = false;
 
     void Start()
     {
@@ -78,6 +81,7 @@ public class Player : MonoBehaviour
         {
             _audioSource.clip = _laserSoundClip;
         }
+
     }
 
     // Update is called once per frame
@@ -85,10 +89,10 @@ public class Player : MonoBehaviour
     {
         CalculateMovement();
 
-        SpeedBoosters();
+        Thrusters();
 
         FireWeapons();
-        
+
     }
 
     void CalculateMovement()
@@ -98,7 +102,7 @@ public class Player : MonoBehaviour
 
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
 
-        transform.Translate(direction * _speed * _speedBooters * Time.deltaTime);
+        transform.Translate(direction * _speed * _thrusters * Time.deltaTime);
 
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.8f, 0),0);
 
@@ -126,18 +130,20 @@ public class Player : MonoBehaviour
         }
     }
 
-    void SpeedBoosters()
+    void Thrusters()
     {
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift) && DisableThrusters == false)
         {
-            _speedBooters = 3;
+            
+            _thrusters = 3;
         }
         else
         {
-            _speedBooters = 1;
+            _thrusters = 1;
         }
     }
 
+    
     void FireLaser()
     {
         _canFire = Time.time + _fireRate;
