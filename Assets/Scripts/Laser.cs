@@ -9,6 +9,13 @@ public class Laser : MonoBehaviour
     [SerializeField]
     private bool _isEnemyLaser = false;
 
+    private ShakeBehavior _shakeBehavior;
+
+    private void Awake()
+    {
+        _shakeBehavior = GameObject.Find("MainCamera").GetComponent<ShakeBehavior>();
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -65,6 +72,7 @@ public class Laser : MonoBehaviour
             if (player != null)
             {
                 player.Damage();
+                _shakeBehavior.TriggerShake();
             }
         }
     }
