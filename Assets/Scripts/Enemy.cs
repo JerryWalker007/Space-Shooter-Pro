@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField]
-    private float _speed = 4.0f;
+    private float _speed = 2.0f;
     [SerializeField]
     private GameObject _laserPrefab;
 
@@ -15,6 +15,12 @@ public class Enemy : MonoBehaviour
     private AudioSource _audioSource;
     private float _fireRate = 3.0f;
     private float _canFire = -1;
+
+    [SerializeField]
+    private float _frequency = 7.0f;
+    [SerializeField]
+    private float _magnitude = 0.1f;
+    private Vector3 _axis;
 
     // Start is called before the first frame update
     void Start()
@@ -38,6 +44,8 @@ public class Enemy : MonoBehaviour
         {
             Debug.LogError("AudioSource for explosion is NULL.");
         }
+
+        _axis = transform.right;
     }
 
     // Update is called once per frame
@@ -61,12 +69,15 @@ public class Enemy : MonoBehaviour
 
     void CalculateMovement()
     {
-        transform.Translate(Vector3.down * _speed * Time.deltaTime);
+        //transform.Translate(Vector3.down * _speed * Time.deltaTime);
+        //transform.position = (_pos + _axis * Mathf.Sin(Time.time * _frequency) * _magnitude);
+        transform.Translate((Vector3.down * _speed *Time.deltaTime) + _axis * Mathf.Sin(Time.time * _frequency) * _magnitude);
 
         if (transform.position.y <= -7f)
         {
             float randomX = Random.Range(-8f, 8f);
             transform.position = new Vector3(randomX, 8, 0);
+            
         }
     }
 
