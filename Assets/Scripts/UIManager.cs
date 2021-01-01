@@ -21,6 +21,8 @@ public class UIManager : MonoBehaviour
     private Text _ammoCountText;
     [SerializeField]
     private Text _outOfAmmoText;
+    [SerializeField]
+    private int _maxAmmo = 15;
 
     private GameManager _gameManager;
 
@@ -28,7 +30,7 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         _scoreText.text = "Score: " + 0;
-        _ammoCountText.text = "Ammo: " + 15;
+        _ammoCountText.text = "Ammo: " + 15 + "/" + _maxAmmo.ToString();
         _outOfAmmoText.gameObject.SetActive(false);
         _gameOverText.gameObject.SetActive(false);
         _gameManager = GameObject.Find("Game_Manager").GetComponent<GameManager>();
@@ -51,7 +53,7 @@ public class UIManager : MonoBehaviour
 
     public void UpdateAmmo(int playerAmmo)
     {
-        _ammoCountText.text = "Ammo: " + playerAmmo.ToString();
+        _ammoCountText.text = "Ammo: " + playerAmmo.ToString() + "/" + _maxAmmo.ToString();
 
         if (playerAmmo == 0)
         {
